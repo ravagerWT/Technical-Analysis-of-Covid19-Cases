@@ -1,0 +1,12 @@
+__pycache__/*.*
+# screenshot/*.jpg
+*.xlsx
+*.xlsm
+*.csv
+*.docx
+*.tmp
+*.db
+*.css
+test.py
+Thumbs.db
+/.vscode/settings.json
