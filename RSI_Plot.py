@@ -3,12 +3,10 @@ import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 
-from typing import List, Type
+from typing import List, Tuple, Type
 
-from Covid19DataHandler import getCovidDataFrame
-
-# Calculating RSI indicator
-def calculate_rsi(df: Type[pd.DataFrame], price_name: str = 'daily_cases', rsi_length: int = 14) -> List:
+# Calculating RSI indicator  # ref:https://stackoverflow.com/questions/40181344/how-to-annotate-types-of-multiple-return-values
+def calculate_rsi(df: Type[pd.DataFrame], price_name: str = 'daily_cases', rsi_length: int = 14) -> Tuple[Type[pd.Series], List]:
     ### How to understand this indicator
     # Wilder recommended using 70 and 30 as overbought and oversold levels respectively. Generally,
     # if the RSI rises above 30 it is considered bullish for the underlying stock. Conversely,
@@ -34,7 +32,7 @@ def calculate_rsi(df: Type[pd.DataFrame], price_name: str = 'daily_cases', rsi_l
     for i in range(len(up_mean)):
         rsi.append(100 * up_mean[i] / (up_mean[i] + down_mean[i]))
     rsi_series = pd.Series(index=Close.index[rsi_length:], data=rsi)
-    return rsi_series.tolist()
+    return rsi_series, rsi_series.tolist()
 
 def renderRSIPlot(df: Type[pd.DataFrame], plot_title='RSI', ylabel='value', timestamp_name = 'date', price_name = 'daily_cases'):
     # Show historic price data in first subplot
@@ -48,7 +46,7 @@ def renderRSIPlot(df: Type[pd.DataFrame], plot_title='RSI', ylabel='value', time
     frame1 = plt.gca() # hide x axis values
     frame1.axes.xaxis.set_ticklabels([])
 
-    rsi = calculate_rsi(df)
+    _, rsi = calculate_rsi(df)
     # add data to another subplot
     x2 = plt.subplot(2, 1, 2, sharex = ax1)
     plt.plot(rsi, color = 'blue')
@@ -59,5 +57,3 @@ def renderRSIPlot(df: Type[pd.DataFrame], plot_title='RSI', ylabel='value', time
 
 if __name__ == '__main__':
     data_path = 'time_series_covid19_confirmed_global.csv'
-    df = getCovidDataFrame(data_path)
-    renderRSIPlot(df,plot_title='Test')

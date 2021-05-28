@@ -3,8 +3,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 from typing import Type
 
-from Covid19DataHandler import getCovidDataFrame
-
 
 # define MACD indicator calculation as function
 
@@ -73,5 +71,3 @@ def renderMACDPlot(df: Type[pd.DataFrame], plot_title='MACD', ylabel='Quantity',
 
 if __name__ == '__main__':
     data_path = 'time_series_covid19_confirmed_global.csv'
-    df = getCovidDataFrame(data_path)
-    renderMACDPlot(df,plot_title='Test')
