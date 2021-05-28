@@ -201,7 +201,7 @@ app.layout = html.Div(
     # state
     [State("stock_name", "value"), State("chart", "value")],
 )
-def graph_genrator(n_clicks, ticker, chart_name):
+def graph_generator(n_clicks, ticker, chart_name):
 
     if n_clicks >= 1:  # Checking for user to click submit button
 
@@ -215,7 +215,7 @@ def graph_genrator(n_clicks, ticker, chart_name):
 
         # selecting graph type
 
-        # line plot
+        # Line plot
         if chart_name == "Line":
             fig = go.Figure(
                 data=[
@@ -322,7 +322,7 @@ def graph_genrator(n_clicks, ticker, chart_name):
                 ),
             )
 
-        # simple oving average
+        # Simple moving average
         if chart_name == "SMA":
             close_ma_10 = df.close.rolling(10).mean()
             close_ma_15 = df.close.rolling(15).mean()
@@ -570,6 +570,8 @@ def graph_genrator(n_clicks, ticker, chart_name):
             )
 
             # Relative strength index
+        
+        # Relative Strength Index
         if chart_name == "RSI":
             rsi_6 = stock["rsi_6"]
             rsi_12 = stock["rsi_12"]
@@ -622,6 +624,7 @@ def graph_genrator(n_clicks, ticker, chart_name):
                 ),
             )
 
+    # Live price
     end_data = datetime.now().date()
     start_date = datetime.now().date() - timedelta(days=30)
     res_df = yf.get_data(
@@ -660,7 +663,7 @@ def graph_genrator(n_clicks, ticker, chart_name):
     # state
     [State("stock_name", "value")],
 )
-def quotes_genrator(n_clicks, ticker):
+def quotes_generator(n_clicks, ticker):
     # info table
     current_stock = yf.get_quote_table(ticker, dict_result=False)
     columns = [{"name": i, "id": i} for i in current_stock.columns]
