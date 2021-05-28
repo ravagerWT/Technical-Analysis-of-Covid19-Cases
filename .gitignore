@@ -1,4 +1,6 @@
 __pycache__/*.*
+/.vscode/settings.json
+/technical analysis sample code/*.*
 # screenshot/*.jpg
 *.xlsx
 *.xlsm
@@ -9,4 +11,3 @@ __pycache__/*.*
 *.css
 test.py
 Thumbs.db
-/.vscode/settings.json

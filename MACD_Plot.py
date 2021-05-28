@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib
-# matplotlib.use('TkAgg')  # show matplotlib graph window in front of other windows (for macOS)
 import matplotlib.pyplot as plt
 from typing import Type
 
