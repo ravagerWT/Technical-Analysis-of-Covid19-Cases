@@ -1,12 +1,24 @@
 import pandas as pd
+import numpy as np
 from typing import Type
 
 from MACD_Plot import calculate_macd
 from RSI_Plot import calculate_rsi
 
-def getCovidDataFrame(DATA_FILE_PATH: str, country: str = 'Taiwan*'):
-    df = pd.read_csv(DATA_FILE_PATH, sep=',')
-    df.drop(labels=['Province/State', 'Lat', 'Long'], axis=1, inplace=True)
+def getCovidDataFrame(DATA_FILE_PATH: str = None, raw_dataframe: Type[pd.DataFrame] = None, country: str = 'Taiwan*', op_mode: int = 0) -> Type[pd.DataFrame]:
+    if op_mode == 0:
+        df = pd.read_csv(DATA_FILE_PATH, sep=',')
+    elif op_mode == 1:
+        df = raw_dataframe
+
+    # delete unused columns
+    df.drop(labels=['Lat', 'Long'], axis=1, inplace=True)
+
+    # merge Country/Region and Province/State.  ref:https://stackoverflow.com/questions/56771162/concatenating-two-columns-in-pandas-dataframe-without-adding-extra-spaces-at-the
+    df['Country/Region'] = np.where(df['Province/State'].isnull(), df['Country/Region'], df['Country/Region'] + ' ' + df['Province/State'])
+    
+    # delete unused columns
+    df.drop(labels=['Province/State'], axis=1, inplace=True)
 
     # extract Taiwan dataset from DataFrame
     filter = df['Country/Region'] == country
@@ -52,10 +64,20 @@ def getCovidDataFrame(DATA_FILE_PATH: str, country: str = 'Taiwan*'):
 
     return df_tw_transpose
 
+def getCountryList(df: Type[pd.DataFrame]):
+    # get country list
+    # merge Country/Region and Province/State.  ref:https://stackoverflow.com/questions/56771162/concatenating-two-columns-in-pandas-dataframe-without-adding-extra-spaces-at-the
+    df['Country/Region'] = np.where(df['Province/State'].isnull(), df['Country/Region'], df['Country/Region'] + ' ' + df['Province/State'])
+    temp_df = pd.Series(df['Country/Region'])
+    return temp_df.to_list()
+
+
 # test function
 if __name__ == '__main__':    
     DATA_FILE_PATH = 'time_series_covid19_confirmed_global.csv'
     # DATA_FILE_PATH = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
-    df = getCovidDataFrame(DATA_FILE_PATH)
+    df = pd.read_csv(DATA_FILE_PATH, sep=',')
+    df_new = getCovidDataFrame(raw_dataframe=df.copy(deep=True), op_mode=1)
+    my_list = getCountryList(df)
     # df.to_csv('tw_case.csv', index=False)
     # print(df)

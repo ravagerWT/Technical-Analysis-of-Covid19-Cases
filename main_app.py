@@ -4,14 +4,22 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import plotly.graph_objs as go
+import pandas as pd
 
-from Covid19DataHandler import getCovidDataFrame
+from Covid19DataHandler import getCovidDataFrame, getCountryList
 
 
 # define style color
 colors = {"background": "#000000", "text": "#ffFFFF"}
-
 external_stylesheets = [dbc.themes.SLATE]
+
+# load date from Johns Hopkins University repository
+# data_src = 'time_series_covid19_confirmed_global.csv'
+data_src = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+raw_df = pd.read_csv(data_src, sep=',')
+
+# get country list
+country_list = getCountryList(df=raw_df.copy(deep=True))
 
 # adding css
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -29,7 +37,7 @@ app.layout = html.Div(
                             html.Header(
                                 [
                                     html.H1(
-                                        "Taiwan COVID-19 Confirm Case Analysis",
+                                        "Technical Analysis of COVID-19 Confirm Case",
                                         style={
                                             "textAlign": "center",
                                             "color": colors["text"],
@@ -47,6 +55,22 @@ app.layout = html.Div(
             [  # Dropdown Div
                 dbc.Row(
                     [
+                        dbc.Col(  # Country
+                            dcc.Dropdown(
+                                id="selected-country",
+                                options=[
+                                    {
+                                        "label": str(country_list[i]),
+                                        "value": str(country_list[i]),
+                                    }
+                                    for i in range(len(country_list))
+                                ],
+                                searchable=True,
+                                value='Taiwan*',
+                                placeholder="Enter Country",
+                            ),
+                            width={"size": 3, "offset": 3},
+                        ),
                         dbc.Col(  # Graph type
                             dcc.Dropdown(
                                 id="chart",
@@ -108,16 +132,15 @@ app.layout = html.Div(
 @app.callback(
     Output("graph", "figure"),
     Input("submit-button-state", "n_clicks"),
+    State("selected-country", "value"),
     State("chart", "value")
 )
-def graph_generator(n_clicks, chart_name):
+def graph_generator(n_clicks, selected_country, chart_name):
 
     if n_clicks >= 1:  # Checking for user to click submit button
 
-        # loading data
-        # data_src = 'time_series_covid19_confirmed_global.csv'
-        data_src = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
-        df = getCovidDataFrame(data_src)
+        # processing data
+        df = getCovidDataFrame(raw_dataframe=raw_df.copy(deep=True), country=selected_country, op_mode=1)
 
         # selecting graph type
         # Line plot
