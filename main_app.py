@@ -20,6 +20,7 @@ server = app.server
 app.layout = html.Div(
     style={"backgroundColor": colors["background"]},
     children=[
+        html.Br(),
         html.Div(
             [  # header Div
                 dbc.Row(
@@ -41,9 +42,6 @@ app.layout = html.Div(
                 )
             ]
         ),
-        html.Br(),
-        html.Br(),
-        html.Br(),
         html.Br(),
         html.Div(
             [  # Dropdown Div
@@ -81,9 +79,6 @@ app.layout = html.Div(
                 )
             ]
         ),
-        html.Br(),
-        html.Br(),
-        html.Br(),
         html.Div(
             [
                 dbc.Row(
@@ -101,6 +96,11 @@ app.layout = html.Div(
                 )
             ]
         ),
+        dcc.Markdown('''
+        * Data source: [COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
+        * Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/technical-analysis-of-covid19-cases)
+        '''
+        )
     ],
 )
 
