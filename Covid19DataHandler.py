@@ -38,12 +38,20 @@ def getCovidDataFrame(DATA_FILE_PATH: str, country: str = 'Taiwan*'):
     df_tw_transpose['MACDh'] = MACD_Histogram
 
     # insert RSI data to data frame
-    rsi_series, _ = calculate_rsi(df_tw_transpose)
-    df_tw_transpose['RSI'] = rsi_series
+    rsi_series_6, _ = calculate_rsi(df_tw_transpose, rsi_length=6)
+    rsi_series_12, _ = calculate_rsi(df_tw_transpose, rsi_length=12)
+    df_tw_transpose['RSI_6'] = rsi_series_6
+    df_tw_transpose['RSI_12'] = rsi_series_12
+
+    # replace NaN with 50.  ref: https://stackoverflow.com/questions/26837998/pandas-replace-nan-with-blank-empty-string
+    df_tw_transpose.RSI_6.fillna(50,inplace=True)
+    df_tw_transpose.RSI_12.fillna(50,inplace=True)
 
     return df_tw_transpose
 
 if __name__ == '__main__':    
     DATA_FILE_PATH = 'time_series_covid19_confirmed_global.csv'
+    # DATA_FILE_PATH = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     df = getCovidDataFrame(DATA_FILE_PATH)
+    # df.to_csv('tw_case.csv', index=False)
     # print(df)
