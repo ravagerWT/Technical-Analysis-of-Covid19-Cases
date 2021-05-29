@@ -47,8 +47,12 @@ def getCovidDataFrame(DATA_FILE_PATH: str, country: str = 'Taiwan*'):
     df_tw_transpose.RSI_6.fillna(50,inplace=True)
     df_tw_transpose.RSI_12.fillna(50,inplace=True)
 
+    # transfer date format.  ref:https://www.delftstack.com/zh-tw/howto/python-pandas/how-to-convert-dataframe-column-to-datetime-in-pandas/
+    df_tw_transpose['date'] = pd.to_datetime(df_tw_transpose['date'], format="%m/%d/%y")
+
     return df_tw_transpose
 
+# test function
 if __name__ == '__main__':    
     DATA_FILE_PATH = 'time_series_covid19_confirmed_global.csv'
     # DATA_FILE_PATH = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'

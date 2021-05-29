@@ -168,8 +168,8 @@ def graph_generator(n_clicks, chart_name):
         # loading data
         # start_date = datetime(2020, 1, 22)
         # end_data = datetime.now().date()
-        data_src = 'time_series_covid19_confirmed_global.csv'
-        # data_src = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+        # data_src = 'time_series_covid19_confirmed_global.csv'
+        data_src = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
         df = getCovidDataFrame(data_src)
 
         # selecting graph type
