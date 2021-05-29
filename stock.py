@@ -3,15 +3,15 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
-import dash_table as dt
+# import dash_table as dt
 import plotly.graph_objs as go
 # from datetime import datetime, timedelta, date
-import pickle
+# import pickle
 
 from Covid19DataHandler import getCovidDataFrame
 
 
-# defining style color
+# define style color
 colors = {"background": "#000000", "text": "#ffFFFF"}
 
 # with open("tickers.pickle", "rb") as f:
@@ -19,10 +19,10 @@ colors = {"background": "#000000", "text": "#ffFFFF"}
 
 external_stylesheets = [dbc.themes.SLATE]
 
-
 # adding css
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
+
 app.layout = html.Div(
     style={"backgroundColor": colors["background"]},
     children=[
