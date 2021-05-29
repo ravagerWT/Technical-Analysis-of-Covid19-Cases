@@ -3,19 +3,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
-# import dash_table as dt
 import plotly.graph_objs as go
-# from datetime import datetime, timedelta, date
-# import pickle
 
 from Covid19DataHandler import getCovidDataFrame
 
 
 # define style color
 colors = {"background": "#000000", "text": "#ffFFFF"}
-
-# with open("tickers.pickle", "rb") as f:
-#     ticker_list = pickle.load(f)
 
 external_stylesheets = [dbc.themes.SLATE]
 
@@ -92,19 +86,6 @@ app.layout = html.Div(
         html.Br(),
         html.Div(
             [
-                # dbc.Row(
-                #     [
-                #         dbc.Col(
-                #             dcc.Graph(
-                #                 id="live price",
-                #                 config={
-                #                     "displaylogo": False,
-                #                     "modeBarButtonsToRemove": ["pan2d", "lasso2d"],
-                #                 },
-                #             )
-                #         )
-                #     ]
-                # ),
                 dbc.Row(
                     [
                         dbc.Col(
@@ -117,35 +98,7 @@ app.layout = html.Div(
                             ),
                         )
                     ]
-                ),
-                # dbc.Row(
-                #     [
-                #         dbc.Col(
-                #             dt.DataTable(
-                #                 id="info",
-                #                 style_table={"height": "auto"},
-                #                 style_cell={
-                #                     "white_space": "normal",
-                #                     "height": "auto",
-                #                     "backgroundColor": colors["background"],
-                #                     "color": "white",
-                #                     "font_size": "16px",
-                #                 },
-                #                 style_data={"border": "#4d4d4d"},
-                #                 style_header={
-                #                     "backgroundColor": colors["background"],
-                #                     "fontWeight": "bold",
-                #                     "border": "#4d4d4d",
-                #                 },
-                #                 style_cell_conditional=[
-                #                     {"if": {"column_id": c}, "textAlign": "center"}
-                #                     for c in ["attribute", "value"]
-                #                 ],
-                #             ),
-                #             width={"size": 6, "offset": 3},
-                #         )
-                #     ]
-                # ),
+                )
             ]
         ),
     ],
@@ -153,12 +106,8 @@ app.layout = html.Div(
 
 # Callback main graph
 @app.callback(
-    # output
-    # [Output("graph", "figure"), Output("live price", "figure")],
     Output("graph", "figure"),
-    # input
     Input("submit-button-state", "n_clicks"),
-    # state
     State("chart", "value")
 )
 def graph_generator(n_clicks, chart_name):
@@ -166,14 +115,11 @@ def graph_generator(n_clicks, chart_name):
     if n_clicks >= 1:  # Checking for user to click submit button
 
         # loading data
-        # start_date = datetime(2020, 1, 22)
-        # end_data = datetime.now().date()
         # data_src = 'time_series_covid19_confirmed_global.csv'
         data_src = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
         df = getCovidDataFrame(data_src)
 
         # selecting graph type
-
         # Line plot
         if chart_name == "Line":
             fig = go.Figure(
@@ -391,57 +337,7 @@ def graph_generator(n_clicks, chart_name):
                     ])
                 )
             )
-
-    # # Latest case
-    # end_data = datetime.now().date()
-    # start_date = datetime.now().date() - timedelta(days=30)
-    # res_df = yf.get_data(
-    #     ticker, start_date=start_date, end_date=end_data, interval="1d"
-    # )
-    # price = yf.get_live_price(ticker)
-    # prev_close = res_df.close.iloc[0]
-
-    # latest_case = go.Figure(
-    #     data=[
-    #         go.Indicator(
-    #             domain={"x": [0, 1], "y": [0, 1]},
-    #             value=price,
-    #             mode="number+delta",
-    #             title={"text": "Price"},
-    #             delta={"reference": prev_close},
-    #         )
-    #     ],
-    #     layout={
-    #         "height": 300,
-    #         "showlegend": True,
-    #         "plot_bgcolor": colors["background"],
-    #         "paper_bgcolor": colors["background"],
-    #         "font": {"color": colors["text"]},
-    #     },
-    # )
-
-    # return fig, latest_case
     return fig
-
-
-# @app.callback(
-#     # output
-#     [Output("info", "columns"), Output("info", "data")],
-#     # input
-#     [Input("submit-button-state", "n_clicks")],
-#     # state
-#     [State("stock_name", "value")],
-# )
-# def quotes_generator(n_clicks, ticker):
-#     # info table
-#     current_stock = yf.get_quote_table(ticker, dict_result=False)
-#     columns = [{"name": i, "id": i} for i in current_stock.columns]
-#     t_data = current_stock.to_dict("records")
-
-#     # price
-
-#     return columns, t_data
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)
