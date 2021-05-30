@@ -181,23 +181,23 @@ def graph_generator(n_clicks, selected_country, chart_name):
 
         # Simple moving average
         if chart_name == "SMA":
-            close_ma_10 = df.daily_cases.rolling(10).mean()
-            close_ma_15 = df.daily_cases.rolling(15).mean()
+            close_ma_7 = df.daily_cases.rolling(7).mean()
             close_ma_30 = df.daily_cases.rolling(30).mean()
-            close_ma_100 = df.daily_cases.rolling(100).mean()
+            close_ma_90 = df.daily_cases.rolling(90).mean()
+            close_ma_120 = df.daily_cases.rolling(120).mean()
             fig = go.Figure(
                 data=[
                     go.Scatter(
-                        x=list(close_ma_10.index), y=list(close_ma_10), name="10 Days"
+                        x=list(df.date), y=list(close_ma_7), name="7 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ma_15.index), y=list(close_ma_15), name="15 Days"
+                        x=list(df.date), y=list(close_ma_30), name="30 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ma_30.index), y=list(close_ma_15), name="30 Days"
+                        x=list(df.date), y=list(close_ma_90), name="90 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ma_100.index), y=list(close_ma_15), name="100 Days"
+                        x=list(df.date), y=list(close_ma_120), name="120 Days"
                     ),
                 ],
                 layout={
@@ -226,30 +226,27 @@ def graph_generator(n_clicks, selected_country, chart_name):
                             dict(step="all"),
                     ])
                 )
-            ),
-            fig.update_traces(mode='markers+lines')
+            )            
 
         # Exponential moving average
         if chart_name == "EMA":
-            close_ema_10 = df.daily_cases.ewm(span=10).mean()
-            close_ema_15 = df.daily_cases.ewm(span=15).mean()
+            close_ema_7 = df.daily_cases.ewm(span=7).mean()
             close_ema_30 = df.daily_cases.ewm(span=30).mean()
-            close_ema_100 = df.daily_cases.ewm(span=100).mean()
+            close_ema_90 = df.daily_cases.ewm(span=90).mean()
+            close_ema_120 = df.daily_cases.ewm(span=120).mean()
             fig = go.Figure(
                 data=[
                     go.Scatter(
-                        x=list(close_ema_10.index), y=list(close_ema_10), name="10 Days"
+                        x=list(df.date), y=list(close_ema_7), name="7 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ema_15.index), y=list(close_ema_15), name="15 Days"
+                        x=list(df.date), y=list(close_ema_30), name="30 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ema_30.index), y=list(close_ema_30), name="30 Days"
+                        x=list(df.date), y=list(close_ema_90), name="90 Days"
                     ),
                     go.Scatter(
-                        x=list(close_ema_100.index),
-                        y=list(close_ema_100),
-                        name="100 Days",
+                        x=list(df.date), y=list(close_ema_120), name="120 Days",
                     ),
                 ],
                 layout={
