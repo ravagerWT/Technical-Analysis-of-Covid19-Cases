@@ -369,4 +369,5 @@ def graph_generator(n_clicks, selected_country, chart_name):
     return fig
 
 if __name__ == "__main__":
+    app.title = 'COVID-19確診病例技術分析 Technical Analysis of COVID-19 Confirm Case'
     app.run_server(debug=True)
