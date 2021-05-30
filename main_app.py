@@ -130,7 +130,7 @@ app.layout = html.Div(
         ),
         dcc.Markdown('''
         * 資料來源 Data source: [COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
-        * 網站原始碼 Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/technical-analysis-of-covid19-cases)
+        * 網站原始碼 Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/Technical-Analysis-of-Covid19-Cases)
         '''
         )
     ],
