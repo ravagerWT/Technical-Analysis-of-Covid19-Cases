@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -37,6 +38,13 @@ app.layout = html.Div(
                             html.Header(
                                 [
                                     html.H1(
+                                        "COVID-19確診病例技術分析",
+                                        style={
+                                            "textAlign": "center",
+                                            "color": colors["text"],
+                                        },
+                                    ),
+                                    html.H3(
                                         "Technical Analysis of COVID-19 Confirm Case",
                                         style={
                                             "textAlign": "center",
@@ -67,7 +75,7 @@ app.layout = html.Div(
                                 ],
                                 searchable=True,
                                 value='Taiwan*',
-                                placeholder="Enter Country",
+                                placeholder="輸入國家 Enter Country",
                             ),
                             width={"size": 3, "offset": 3},
                         ),
@@ -75,15 +83,15 @@ app.layout = html.Div(
                             dcc.Dropdown(
                                 id="chart",
                                 options=[
-                                    {"label": "Line", "value": "Line"},
-                                    {"label": "Simple Moving Average",
+                                    {"label": "每日確診病例數 Line", "value": "Line"},
+                                    {"label": "簡單移動平均 Simple Moving Average",
                                         "value": "SMA"},
                                     {
-                                        "label": "Exponential Moving Average",
+                                        "label": "指數移動平均 Exponential Moving Average",
                                         "value": "EMA",
                                     },
-                                    {"label": "MACD", "value": "MACD"},
-                                    {"label": "RSI", "value": "RSI"},
+                                    {"label": "指數平滑異同移動平均線 MACD", "value": "MACD"},
+                                    {"label": "相對強弱指數 RSI", "value": "RSI"},
                                 ],
                                 value="Line",
                                 style={"color": "#000000"},
@@ -92,7 +100,7 @@ app.layout = html.Div(
                         ),
                         dbc.Col(  # button
                             dbc.Button(
-                                "Plot",
+                                "繪圖 Plot",
                                 id="submit-button-state",
                                 className="mr-1",
                                 n_clicks=1,
@@ -121,8 +129,8 @@ app.layout = html.Div(
             ]
         ),
         dcc.Markdown('''
-        * Data source: [COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
-        * Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/technical-analysis-of-covid19-cases)
+        * 資料來源 Data source: [COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
+        * 網站原始碼 Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/technical-analysis-of-covid19-cases)
         '''
         )
     ],
@@ -153,7 +161,7 @@ def graph_generator(n_clicks, selected_country, chart_name):
                 ],
                 layout={
                     "height": 1000,
-                    "title": chart_name,
+                    "title": "每日確診病例數 Line",
                     "showlegend": True,
                     "plot_bgcolor": colors["background"],
                     "paper_bgcolor": colors["background"],
@@ -202,7 +210,7 @@ def graph_generator(n_clicks, selected_country, chart_name):
                 ],
                 layout={
                     "height": 1000,
-                    "title": chart_name,
+                    "title": "簡單移動平均 Simple Moving Average",
                     "showlegend": True,
                     "plot_bgcolor": colors["background"],
                     "paper_bgcolor": colors["background"],
@@ -251,7 +259,7 @@ def graph_generator(n_clicks, selected_country, chart_name):
                 ],
                 layout={
                     "height": 1000,
-                    "title": chart_name,
+                    "title": "指數移動平均 Exponential Moving Average",
                     "showlegend": True,
                     "plot_bgcolor": colors["background"],
                     "paper_bgcolor": colors["background"],
@@ -293,7 +301,7 @@ def graph_generator(n_clicks, selected_country, chart_name):
                 ],
                 layout={
                     "height": 1000,
-                    "title": chart_name,
+                    "title": "指數平滑異同移動平均線 MACD",
                     "showlegend": True,
                     "plot_bgcolor": colors["background"],
                     "paper_bgcolor": colors["background"],
@@ -332,7 +340,7 @@ def graph_generator(n_clicks, selected_country, chart_name):
                 ],
                 layout={
                     "height": 1000,
-                    "title": chart_name,
+                    "title": "相對強弱指數 RSI",
                     "xaxis_title" : 'Dates',                    
                     "showlegend": True,
                     "plot_bgcolor": colors["background"],
