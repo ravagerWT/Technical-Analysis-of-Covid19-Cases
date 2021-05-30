@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import Type
 
-from MACD_Plot import calculate_macd
-from RSI_Plot import calculate_rsi
+from tech_analysis_lib import calculate_macd, calculate_rsi
 
 def getCovidDataFrame(DATA_FILE_PATH: str = None, raw_dataframe: Type[pd.DataFrame] = None, country: str = 'Taiwan*', op_mode: int = 0) -> Type[pd.DataFrame]:
     if op_mode == 0:

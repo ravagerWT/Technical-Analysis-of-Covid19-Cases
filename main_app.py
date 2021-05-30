@@ -226,7 +226,8 @@ def graph_generator(n_clicks, selected_country, chart_name):
                             dict(step="all"),
                     ])
                 )
-            )
+            ),
+            fig.update_traces(mode='markers+lines')
 
         # Exponential moving average
         if chart_name == "EMA":

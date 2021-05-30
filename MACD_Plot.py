@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib
 import matplotlib.pyplot as plt
 from typing import Type
 
@@ -32,7 +31,7 @@ from typing import Type
 # Read more: Moving Average Convergence Divergence (MACD) https://www.investopedia.com/terms/m/macd.asp#ixzz5VfwX1yUA
 
 # default MACD period values are: period_long = 26, period_short = 12, period_singal = 9.
-def calculate_macd(df, PRICE_NAME, period_long, period_short, period_singal):
+def calculate_macd(df, PRICE_NAME: str, period_long: int = 26, period_short: int = 12, period_singal: int = 9):
     EMA_long = df[PRICE_NAME].ewm(span=period_long, adjust=False).mean()
     EMA_short = df[PRICE_NAME].ewm(span=period_short, adjust=False).mean()
     MACD_line = EMA_short - EMA_long
