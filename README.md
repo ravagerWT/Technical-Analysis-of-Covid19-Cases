@@ -3,6 +3,8 @@
 
 ![](screenshot/Main%20GUI%201.0.0.jpg?raw=true)
 
+**Visit website [here](https://covid19-cases-tech-analysis.herokuapp.com/).**
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine.
