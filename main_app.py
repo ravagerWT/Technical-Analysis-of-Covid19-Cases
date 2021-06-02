@@ -22,8 +22,12 @@ raw_df = pd.read_csv(data_src, sep=',')
 # get country list
 country_list = getCountryList(df=raw_df.copy(deep=True))
 
+my_meta_tags = [
+    {'meta name': 'google-site-verification', 'content': '_UwS9WDWDerzEsP8hN-iypyU8en5R2C7sCboBir2ILQ'}
+]
+
 # adding css
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=my_meta_tags)
 server = app.server
 
 app.layout = html.Div(
