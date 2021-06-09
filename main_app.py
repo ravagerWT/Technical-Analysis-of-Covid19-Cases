@@ -22,13 +22,15 @@ raw_df = pd.read_csv(data_src, sep=',')
 # get country list
 country_list = getCountryList(df=raw_df.copy(deep=True))
 
+# add meta tags for google search. ref:https://github.com/plotly/dash/pull/286
 my_meta_tags = [
     {'meta name': 'google-site-verification', 'content': '_UwS9WDWDerzEsP8hN-iypyU8en5R2C7sCboBir2ILQ'}
 ]
 
 # adding css
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=my_meta_tags)
-server = app.server
+app.title = 'COVID-19確診病例技術分析 Technical Analysis of COVID-19 Confirm Case'
+# server = app.server
 
 app.layout = html.Div(
     style={"backgroundColor": colors["background"]},
@@ -87,7 +89,7 @@ app.layout = html.Div(
                             dcc.Dropdown(
                                 id="chart",
                                 options=[
-                                    {"label": "每日確診病例數 Line", "value": "Line"},
+                                    {"label": "每日確診病例數 Daily Confirmed Cases", "value": "Line"},
                                     {"label": "簡單移動平均 Simple Moving Average",
                                         "value": "SMA"},
                                     {
@@ -134,7 +136,7 @@ app.layout = html.Div(
         ),
         dcc.Markdown('''
         * 資料來源 Data source: [COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University](https://github.com/CSSEGISandData/COVID-19)
-        * 網站原始碼 Site Repository: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/Technical-Analysis-of-Covid19-Cases)
+        * 網站原始碼 Site Repository on GitHub: [Technical-analysis-of-covid19-cases](https://github.com/ravagerWT/Technical-Analysis-of-Covid19-Cases)
         '''
         )
     ],
@@ -373,5 +375,4 @@ def graph_generator(n_clicks, selected_country, chart_name):
     return fig
 
 if __name__ == "__main__":
-    app.title = 'COVID-19確診病例技術分析 Technical Analysis of COVID-19 Confirm Case'
     app.run_server(debug=True)
