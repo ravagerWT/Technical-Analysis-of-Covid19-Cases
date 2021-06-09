@@ -30,7 +30,7 @@ my_meta_tags = [
 # adding css
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=my_meta_tags)
 app.title = 'COVID-19確診病例技術分析 Technical Analysis of COVID-19 Confirm Case'
-# server = app.server
+server = app.server  # this line is necessary for deploying on heroku
 
 app.layout = html.Div(
     style={"backgroundColor": colors["background"]},
